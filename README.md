@@ -53,7 +53,7 @@ You'll also want to set up local Python environments for Databricks Connect and 
 
 #### Windows
 
-1. **Create and activate the Databricks Connect environment (using Python 3.11)**
+1. **Create and activate the Databricks Connect environment (using Python 3.11)**.
    ```powershell
    # at the project root
    py -3.11 -m venv .venv_dbc
