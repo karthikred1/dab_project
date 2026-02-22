@@ -33,13 +33,13 @@ targets:
     presets:
       name_prefix: '[testing] '
     workspace:
-      host: your-workspace-url # replace with your Workspace URL
+      host: https://adb-7405609741396167.7.azuredatabricks.net/ # replace with your Workspace URL
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     permissions:
-      - service_principal_name: your-service-principal-name # update with your service principal name
+      - service_principal_name: de020c57-fda9-47d8-bb27-ac27b6f0b233 # update with your service principal name
         level: CAN_MANAGE
     run_as:
-      service_principal_name: your-service-principal-name # update with your service principal name
+      service_principal_name: de020c57-fda9-47d8-bb27-ac27b6f0b233 # update with your service principal name
 
   prod:
     mode: production
@@ -49,10 +49,10 @@ targets:
       dev_flag:
         default: false
     workspace:
-      host: your-workspace-url # replace with your Workspace URL
+      host: https://adb-7405611064971669.9.azuredatabricks.net/ # replace with your Workspace URL
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     permissions:
-      - service_principal_name: your-service-principal-name # update with your service principal name
+      - service_principal_name: 1890d985-f058-4595-8686-5a230f30c1ba # update with your service principal name
         level: CAN_MANAGE
     run_as:
-      service_principal_name: your-service-principal-name # update with your service principal name
+      service_principal_name: 1890d985-f058-4595-8686-5a230f30c1ba # update with your service principal name
