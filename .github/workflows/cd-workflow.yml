@@ -6,8 +6,74 @@ on:
       - main
 
 jobs:
-  cd_job:
+  cd_deploy_test:
     runs-on: ubuntu-latest
+    environment: test
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install databricks bundle CLI
+        run: curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install setuptools wheel
+
+      - name: Configure Databricks
+        run: |
+          cat <<EOF > ~/.databrickscfg
+          [TEST]
+          host = https://adb-7405609741396167.7.azuredatabricks.net/
+          azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
+          azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
+          azure_client_secret = ${{ secrets.AZURE_CLIENT_SECRET }}
+          EOF
+        
+      - name: Deploy to Databricks Test Environment
+        run: databricks bundle deploy \
+          --target test \
+          --profile TEST
+
+  cd_deploy_prod:
+    runs-on: ubuntu-latest
+    environment: prod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install databricks bundle CLI
+        run: curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install setuptools wheel
+
+      - name: Configure Databricks
+        run: |
+          cat <<EOF > ~/.databrickscfg
+          [PROD]
+          host = https://adb-7405611064971669.9.azuredatabricks.net
+          azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
+          azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
+          azure_client_secret = ${{ secrets.AZURE_CLIENT_SECRET }}
+          EOF
+        
+      - name: Deploy to Databricks Production Environment
+        run: databricks bundle deploy \
+          --target prod \
+          --profile PROD
