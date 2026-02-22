@@ -38,7 +38,8 @@ jobs:
           EOF
         
       - name: Deploy to Databricks Test Environment
-        run: databricks bundle deploy \
+        run: |
+          databricks bundle deploy \
           --target test \
           --profile TEST
 
@@ -74,6 +75,7 @@ jobs:
           EOF
         
       - name: Deploy to Databricks Production Environment
-        run: databricks bundle deploy \
-          --target prod \
-          --profile PROD
+        run: |
+          databricks bundle deploy \
+            --target prod \
+            --profile PROD
